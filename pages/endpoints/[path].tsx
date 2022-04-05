@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
-import { Heading } from "@go1d/go1d";
-import { OpenAPI, OpenAPIV3 } from "openapi-types";
 import SwaggerParser from "@apidevtools/swagger-parser";
+import { Heading } from "@go1d/go1d";
+import * as base64 from "base-64";
+import { OpenAPI, OpenAPIV3 } from "openapi-types";
 import Layout from "src/components/layout/Layout";
 import Endpoint from "src/components/features/Endpoint";
 import { safeStringify } from "src/services/utils";
@@ -53,7 +54,7 @@ export async function getStaticProps({ params: { path } }: any) {
     require((process.env as any).API_URL)
   );
 
-  const pathId = atob(path);
+  const pathId = base64.decode(path);
 
   const endpoints: EndpointType[] = [];
   Object.entries(
@@ -73,7 +74,7 @@ export async function getStaticProps({ params: { path } }: any) {
       info: api.info,
       paths: Object.keys(api?.paths || {}).map((key) => ({
         label: key,
-        href: `/endpoints/${btoa(key)}`,
+        href: `/endpoints/${base64.encode(key)}`,
       })),
       path: pathId,
       endpoints,
@@ -85,7 +86,7 @@ export async function getStaticPaths() {
   const api: OpenAPIV3.Document = require((process.env as any).API_URL);
   const paths =
     Object.keys(api.paths).map((path) => {
-      return `/endpoints/${btoa(path)}`;
+      return `/endpoints/${base64.encode(path)}`;
     }) || [];
 
   return {

@@ -1,4 +1,4 @@
-import { Heading, Link, Pill, Prose, Text, View } from "@go1d/go1d";
+import { Heading, Link, Prose, Text, View } from "@go1d/go1d";
 import { OpenAPIV3 } from "openapi-types";
 import { FC } from "react";
 import RequestCard from "src/components/common/card/RequestCard";
@@ -6,6 +6,7 @@ import ResponseCard from "src/components/common/card/ResponseCard";
 import ParameterList from "src/components/common/list/ParameterList";
 import RequestBodyList from "src/components/common/list/RequestBodyList";
 import ResponseBodyList from "src/components/common/list/ResponseBodyList";
+import { AuthScopes } from "src/components/features/Auth";
 
 interface Props {
   path: string;
@@ -38,15 +39,7 @@ const Endpoint: FC<Props> = ({ path, method, operation }) => {
         <Text marginTop={1} marginBottom={3}>
           <Prose HTML={operation.description} />
         </Text>
-        {operation.security && operation.security[0] && (
-          <View flexDirection="row" marginBottom={4}>
-            {(operation.security as any)[0].OAuth2.map((scope: string) => (
-              <Pill key={scope} color="success" fontSize={1}>
-                {scope}
-              </Pill>
-            ))}
-          </View>
-        )}
+        <AuthScopes security={operation.security || []} />
         <ParameterList parameters={operation.parameters || []} />
         <RequestBodyList requestBody={operation.requestBody || {}} />
         <ResponseBodyList responses={operation.responses || {}} />

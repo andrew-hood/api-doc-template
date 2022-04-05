@@ -1,4 +1,4 @@
-import { ButtonFilled, GlobalMessage, Text, View } from "@go1d/go1d";
+import { ButtonFilled, GlobalMessage, Pill, Text, View } from "@go1d/go1d";
 import IconUser from "@go1d/go1d/build/components/Icons/User";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -14,13 +14,37 @@ export const AuthLoginButton = () => {
 
   return auth?.access_token ? (
     <ButtonFilled icon={IconUser} onClick={() => dispatch(logout())}>
-      Sign out
+      Logout
     </ButtonFilled>
   ) : (
     <ButtonFilled icon={IconUser} color="accent" href={LOGIN_URL}>
       Login
     </ButtonFilled>
   );
+};
+
+export const AuthScopes = ({ security }: { security: any }) => {
+  const auth: any = useSelector<any>((state) => state.auth.value);
+
+  const Tag = ({ label }: { label: string }) => (
+    <Pill
+      color={auth?.scopes?.indexOf(label) >= 0 ? "success" : "warning"}
+      fontSize={1}
+      margin={2}
+    >
+      <Text fontWeight="semibold" fontSize={1}>
+        {label}
+      </Text>{" "}
+      {auth?.scopes?.indexOf(label) < 0 && "(missing)"}
+    </Pill>
+  );
+  return security?.length > 0 && security[0].OAuth2 ? (
+    <View flexDirection="row" marginBottom={4} flexWrap="wrap">
+      {security[0].OAuth2.map((scope: string) => (
+        <Tag key={scope} label={scope} />
+      ))}
+    </View>
+  ) : null;
 };
 
 export const AuthNotification = () => {
@@ -54,7 +78,7 @@ export const AuthNotification = () => {
         justifyContent="space-between"
         marginTop={-3}
       >
-        <Text marginRight={3}>You&apos;re logged in as Andrew Hood</Text>
+        <Text marginRight={3}>You&apos;re currently logged in</Text>
         <ButtonFilled
           color="success"
           size="sm"

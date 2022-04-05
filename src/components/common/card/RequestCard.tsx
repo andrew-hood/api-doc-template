@@ -7,7 +7,6 @@ import {
 } from "@go1d/go1d";
 import IconCopy from "@go1d/go1d/build/components/Icons/Copy";
 import IconVideoplay from "@go1d/go1d/build/components/Icons/Videoplay";
-import IconEdit from "@go1d/go1d/build/components/Icons/Edit";
 import dynamic from "next/dynamic";
 import React, { FC, useEffect, useState } from "react";
 import { useModal } from "react-modal-hook";
@@ -55,13 +54,11 @@ const RequestCard: FC<Props> = ({
         break;
       case "js":
         httpClient.convertToCurl(path, method, operationObject);
-        setContent(`const result = await axios.post("https://domain.com/asfasdgasdf", {
-          assdsd: asdfasdf
-        })`);
+        setContent(`Not available`);
         break;
       case "php":
         httpClient.convertToCurl(path, method, operationObject);
-        setContent('curl https://domain/adsfsadf -d {"asdf": "sdfasdf"}');
+        setContent(`Not available`);
         break;
     }
   }, [language, method, operationObject, path, auth]);
@@ -80,7 +77,7 @@ const RequestCard: FC<Props> = ({
     document.execCommand("copy");
 
     NotificationManager.success({
-      message: <Text>Clip copied</Text>,
+      message: <Text>Snippet copied</Text>,
       options: {
         lifetime: 3000,
         isOpen: true,

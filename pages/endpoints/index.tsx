@@ -1,5 +1,6 @@
 import { Heading } from "@go1d/go1d";
 import type { NextPage } from "next";
+import * as base64 from "base-64";
 import { OpenAPI, OpenAPIV3 } from "openapi-types";
 import MarkdownText from "src/components/common/text/MarkdownText";
 import Layout from "src/components/layout/Layout";
@@ -67,7 +68,7 @@ export async function getStaticProps() {
       info: api.info,
       paths: Object.keys(api?.paths || {}).map((key) => ({
         label: key,
-        href: `/endpoints/${btoa(key)}`,
+        href: `/endpoints/${base64.encode(key)}`,
       })),
       endpoints,
     },
