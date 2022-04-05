@@ -5,12 +5,14 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "./reducer";
 
-const LOGIN_URL =
-  "https://auth.go1.com/oauth/authorize?response_type=token&client_id=46c2803e7fc8876ef99019ee856969857fb58e8c&redirect_uri=http://127.0.0.1:8081/&scope=user.read&partner_portal_id=1866971#/";
-
 export const AuthLoginButton = () => {
   const dispatch = useDispatch();
   const auth: any = useSelector<any>((state) => state.auth.value);
+
+  const LOGIN_URL = [
+    "https://auth.go1.com/oauth/authorize",
+    "response_type=token&client_id=46c2803e7fc8876ef99019ee856969857fb58e8c&redirect_uri=http://127.0.0.1:8081/&scope=user.read&partner_portal_id=1866971",
+  ].join("?");
 
   return auth?.access_token ? (
     <ButtonFilled icon={IconUser} onClick={() => dispatch(logout())}>
