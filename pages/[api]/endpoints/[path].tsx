@@ -22,19 +22,7 @@ const TagPage: NextPage<Props> = ({ layout, endpoint }) => {
         marginBottom={4}
         color="accent"
       >
-        <View
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          {endpoint.url}
-          <ButtonMinimal
-            icon={IconText}
-            href={`/studio?api=${layout.api}&path=${endpoint.url}`}
-          >
-            Edit in studio
-          </ButtonMinimal>
-        </View>
+        {endpoint.url}
       </Heading>
       {endpoint.operations.map(
         ({

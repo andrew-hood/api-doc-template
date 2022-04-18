@@ -1,18 +1,17 @@
-import { NextPage, NextPageContext } from "next";
+import { readdir } from "fs/promises";
+import { NextPage } from "next";
 import { useState } from "react";
 import ExecuteTests from "src/components/features/Studio/ExecuteTests";
 import Operation from "src/components/features/Studio/Operation";
 import Layout from "src/components/layout/Layout";
+import { generateLayout } from "src/utils/layout";
 
 interface Props {
-  api: string;
-  data?: any[];
+  layout: any;
 }
 
-const StudioPage: NextPage<Props> = ({ api, data }) => {
-  const [contracts, setContracts] = useState<any[]>(
-    data || [{ id: `T${Date.now()}` }]
-  );
+const StudioPage: NextPage<Props> = ({ layout }) => {
+  const [contracts, setContracts] = useState<any[]>([{ id: `T${Date.now()}` }]);
 
   const handleAddContract = () => {
     setContracts([
@@ -43,8 +42,8 @@ const StudioPage: NextPage<Props> = ({ api, data }) => {
 
   return (
     <Layout
-      layout={{ title: "Studio" }}
-      action={<ExecuteTests api={api} contracts={contracts} />}
+      layout={layout}
+      action={<ExecuteTests api={layout.api} contracts={contracts} />}
     >
       {contracts.map((contract, index) => (
         <Operation
@@ -58,13 +57,26 @@ const StudioPage: NextPage<Props> = ({ api, data }) => {
   );
 };
 
-export async function getServerSideProps({ query }: NextPageContext) {
-  // load contracts
+export async function getStaticProps({ params: { api } }: any) {
+  const { layout } = await generateLayout(api);
 
   return {
     props: {
-      api: query?.api,
+      layout,
     },
+  };
+}
+
+export async function getStaticPaths() {
+  let paths: any[] = [];
+  const files = await readdir("public/apis");
+  files.forEach((file) => {
+    paths.push(`/${file.replace(".json", "")}/studio`);
+  });
+
+  return {
+    paths,
+    fallback: false,
   };
 }
 

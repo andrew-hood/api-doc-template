@@ -74,7 +74,10 @@ export const generateEndpoints = (api: OpenAPI.Document) => {
 };
 
 const generateMenu = (api: string, endpoints: any[]) => {
-  const menus: MenuItemType[] = [{ label: "Introduction", href: `/${api}` }];
+  const menus: MenuItemType[] = [
+    { label: "Introduction", href: `/${api}` },
+    { label: "Studio", href: `/${api}/studio` },
+  ];
 
   endpoints?.forEach((endpoint) => {
     endpoint.tags?.map((tag: string) => {

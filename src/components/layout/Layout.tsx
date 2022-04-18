@@ -36,7 +36,7 @@ const Layout: FC<Props> = ({
           <Container
             contain={menu ? "full" : "wide"}
             paddingY={8}
-            paddingX={menu ? [6, 8, 9] : 0}
+            paddingX={menu ? [6, 8, 9] : [4, 4, 0]}
           >
             {children}
           </Container>
