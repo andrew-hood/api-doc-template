@@ -4,7 +4,6 @@ import { OpenAPIV3 } from "openapi-types";
 import { IJsonSchema } from "openapi-types";
 import { FC, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { add } from "src/components/features/Errors/reducer";
 import useContentType from "src/hooks/useContentType";
 import MarkdownText from "../text/MarkdownText";
 import BaseList from "./BaseList";
@@ -19,7 +18,6 @@ interface Props {
 }
 
 const PropertiesList: FC<Props> = ({ title, object }) => {
-  const dispatch = useDispatch();
   const [properties, setProperties] = useState<any>([]);
   const [contentType, contentTypeOptions, setContentType] =
     useContentType(object);
@@ -34,16 +32,6 @@ const PropertiesList: FC<Props> = ({ title, object }) => {
       ...(value as object),
     })) as (IJsonSchema & { name: string })[];
     setProperties(values);
-
-    // values
-    //   .filter((val) => {
-    //     return !val.description;
-    //   })
-    //   .forEach((val) => {
-    //     dispatch(
-    //       add({ title, message: `${val.name} is missing a description` })
-    //     );
-    //   });
   }, [object, contentType]);
 
   return contentType ? (
@@ -64,11 +52,7 @@ const PropertiesList: FC<Props> = ({ title, object }) => {
               {item.type}
             </Text>
           </View>
-          <MarkdownText
-            color="subtle"
-            fontSize={1}
-            text={item.description || ""}
-          />
+          <MarkdownText color="subtle" text={item.description || ""} />
           {item.type === "object" && item.properties && (
             <ChildObjectList object={item?.properties || {}} />
           )}

@@ -26,6 +26,7 @@ const DetailsCard: FC<Props> = ({ title, actions, content }) => {
             semanticElement="h6"
             visualHeadingLevel="Heading 6"
             color="default"
+            marginLeft={2}
           >
             {title}
           </Heading>

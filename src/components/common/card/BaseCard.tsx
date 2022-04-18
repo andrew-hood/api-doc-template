@@ -2,10 +2,10 @@ import { View, ViewProps } from "@go1d/go1d";
 import React, { FC, ReactElement } from "react";
 
 interface Props {
-  header: ReactElement;
+  header?: ReactElement;
 }
 
-const BaseCard: FC<Props & ViewProps> = ({ header, children, ...props }) => {
+const BaseCard: FC<Props & ViewProps> = ({ children, header, ...props }) => {
   return (
     <View
       borderRadius={3}
@@ -14,9 +14,11 @@ const BaseCard: FC<Props & ViewProps> = ({ header, children, ...props }) => {
       backgroundColor="faint"
       {...props}
     >
-      <View padding={3} backgroundOpacity="highlight">
-        {header}
-      </View>
+      {header && (
+        <View padding={2} backgroundOpacity="highlight">
+          {header}
+        </View>
+      )}
       <View flexGrow={1} flexShrink={1} overflow="auto">
         {children}
       </View>

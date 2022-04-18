@@ -26,7 +26,7 @@ const Endpoint: FC<Props> = ({ path, method, operation }) => {
       marginY={8}
       borderTop={1}
     >
-      <View flexBasis={["auto", 0.47]}>
+      <View flexBasis={["auto", 0.45]}>
         <Link href={`#${operation.operationId}`}>
           <Heading
             semanticElement="h3"
@@ -37,7 +37,7 @@ const Endpoint: FC<Props> = ({ path, method, operation }) => {
           </Heading>
         </Link>
         <Text marginTop={1} marginBottom={3}>
-          <Prose HTML={operation.description} />
+          <Prose fontSize={2} HTML={operation.description} />
         </Text>
         <AuthScopes security={operation.security || []} />
         <ParameterList parameters={operation.parameters || []} />
@@ -47,8 +47,8 @@ const Endpoint: FC<Props> = ({ path, method, operation }) => {
       <View
         flexBasis={["auto", 0.47]}
         position={["relative", "sticky"]}
-        css={{ top: "20px" }}
-        maxHeight="94vh"
+        css={{ top: "80px" }}
+        maxHeight="90vh"
       >
         <RequestCard path={path} method={method} operationObject={operation} />
         <ResponseCard responses={operation.responses} />

@@ -2,7 +2,7 @@ import { Text, View } from "@go1d/go1d";
 import { get } from "lodash";
 import React, { FC, useEffect, useState } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { transformObject } from "src/services/utils";
+import { transformObject } from "src/utils/transform";
 import ButtonGroup from "../button/ButtonGroup";
 import DetailsCard from "./DetailsCard";
 
@@ -33,7 +33,7 @@ const ResponseCard: FC<Props> = ({ responses }) => {
         <ButtonGroup
           items={responses}
           selected={statusCode}
-          onSelect={setStatusCode}
+          onClick={setStatusCode}
           itemRenderer={(key) => key}
         />
       }

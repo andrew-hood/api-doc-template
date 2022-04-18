@@ -1,35 +1,48 @@
 import { Container, View } from "@go1d/go1d";
 import Head from "next/head";
-import { FC } from "react";
+import { FC, ReactElement } from "react";
+import { AuthNotification } from "../features/Auth";
 import SideMenu from "./SideMenu";
 import TopMenu from "./TopMenu";
 
 interface Props {
-  title: string;
-  description?: string;
-  menu?: {
-    id?: string;
-    items: any[];
+  layout: {
+    title: string;
+    description?: string;
+    menu?: any[];
+    api?: string;
+    apis?: any;
   };
+  action?: ReactElement;
 }
 
-const Layout: FC<Props> = ({ title, description = "", menu, children }) => {
+const Layout: FC<Props> = ({
+  layout: { title, description = "", menu, api, apis },
+  action,
+  children,
+}) => {
   return (
-    <View flexDirection="row">
+    <>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <SideMenu id={menu?.id} items={menu?.items} />
-      <View flexGrow={1} flexShrink={1}>
-        <TopMenu title={title} />
-        <Container contain="full" paddingY={8} paddingX={[6, 8, 9]}>
-          {children}
-        </Container>
+      <TopMenu title={title} api={api} apis={apis} action={action} />
+      <View flexDirection="row">
+        {menu && <SideMenu menu={menu} />}
+        <View flexGrow={1} flexShrink={1}>
+          <AuthNotification />
+          <Container
+            contain={menu ? "full" : "wide"}
+            paddingY={8}
+            paddingX={menu ? [6, 8, 9] : 0}
+          >
+            {children}
+          </Container>
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 

@@ -1,11 +1,11 @@
+const removeImports = require("next-remove-imports")();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   compress: true,
   trailingSlash: false,
-  env: {
-    API_URL: "public/api.json",
-  },
+  experimental: { esmExternals: true },
 };
 
-module.exports = nextConfig;
+module.exports = removeImports(nextConfig);

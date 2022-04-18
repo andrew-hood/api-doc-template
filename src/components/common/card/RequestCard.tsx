@@ -1,14 +1,8 @@
-import {
-  ButtonMinimal,
-  Modal,
-  NotificationManager,
-  Text,
-  View,
-} from "@go1d/go1d";
+import { Modal, NotificationManager, Text, View } from "@go1d/go1d";
 import IconCopy from "@go1d/go1d/build/components/Icons/Copy";
 import IconVideoplay from "@go1d/go1d/build/components/Icons/Videoplay";
 import dynamic from "next/dynamic";
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useModal } from "react-modal-hook";
 import { dark } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import { OpenAPIV3 } from "openapi-types";
@@ -30,6 +24,11 @@ const LANGUAGE_OPTIONS = {
   curl: { label: "cURL", syntax: "bash" },
   js: { label: "JS", syntax: "javascript" },
   php: { label: "PHP", syntax: "php" },
+};
+
+const ACTION_OPTIONS = {
+  execute: { icon: <IconVideoplay size={1} /> },
+  copy: { icon: <IconCopy size={1} /> },
 };
 
 const RequestCard: FC<Props> = ({
@@ -109,34 +108,14 @@ const RequestCard: FC<Props> = ({
           <ButtonGroup
             items={LANGUAGE_OPTIONS}
             selected={language}
-            onSelect={setLanguage}
-            itemRenderer={(key) => (LANGUAGE_OPTIONS as any)[key].label}
+            onClick={setLanguage}
+            itemRenderer={(key, item) => item.label}
           />
-          <View flexDirection="row" alignItems="center">
-            {auth?.access_token && (
-              <>
-                <ButtonMinimal
-                  aria-label="execute"
-                  size="sm"
-                  icon={IconVideoplay}
-                  onClick={handleSendRequest}
-                />
-                <View
-                  borderLeft={1}
-                  color="soft"
-                  paddingLeft={2}
-                  marginLeft={2}
-                  height={20}
-                />
-              </>
-            )}
-            <ButtonMinimal
-              aria-label="copy"
-              size="sm"
-              icon={IconCopy}
-              onClick={handleCopyCode}
-            />
-          </View>
+          <ButtonGroup
+            items={ACTION_OPTIONS}
+            onClick={handleCopyCode}
+            itemRenderer={(key, item) => item.icon}
+          />
         </View>
       }
     >

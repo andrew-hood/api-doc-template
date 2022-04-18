@@ -8,11 +8,13 @@ interface Props {
   parameters: OpenAPI.Parameter[];
 }
 
+const FILTER_QUERY = (param: Record<string, any>) => param.in === "query";
+
 const ParameterList: FC<Props> = ({ parameters }) => {
-  return parameters.length > 0 ? (
+  return parameters.filter(FILTER_QUERY).length > 0 ? (
     <BaseList
-      title="Parameters"
-      items={parameters}
+      title="Query Parameters"
+      items={parameters.filter(FILTER_QUERY)}
       itemRenderer={(item, index) => (
         <View key={index} marginBottom={5}>
           <View flexDirection="row" alignItems="center">

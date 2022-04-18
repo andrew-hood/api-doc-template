@@ -33,6 +33,7 @@ const BaseList: FC<Props & ViewProps> = ({
           <Heading
             semanticElement="h4"
             visualHeadingLevel="Heading 4"
+            color="default"
             marginBottom={3}
           >
             {title}

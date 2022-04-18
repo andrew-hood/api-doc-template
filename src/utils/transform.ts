@@ -4,11 +4,9 @@ export const transformObject = (response: object) => {
     if ((value as any).type === "object") {
       object[key] = transformObject(value?.properties || value);
     } else if ((value as any).type === "array") {
-      object[key] = [
-        value?.items?.properties
-          ? transformObject(value?.items?.properties)
-          : value?.items?.format,
-      ];
+      object[key] = value?.items?.properties
+        ? [transformObject(value?.items?.properties)]
+        : value?.example || [""];
     } else {
       object[key] = value?.example || "";
     }

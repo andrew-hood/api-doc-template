@@ -5,6 +5,7 @@ import { globalCSS, NotificationContainer } from "@go1d/go1d";
 import store from "src/store";
 import { Provider } from "react-redux";
 import { ErrorModal } from "src/components/features/Errors";
+import AceEditor from "react-ace";
 
 globalCSS();
 

@@ -25,7 +25,6 @@ const ChildObjectList: FC<Props> = ({ object }) => {
   return properties.length > 0 ? (
     <View
       marginTop={3}
-      marginBottom={4}
       border={1}
       borderRadius={3}
       borderColor="faded"
@@ -49,12 +48,12 @@ const ChildObjectList: FC<Props> = ({ object }) => {
       </ButtonMinimal>
       {visibility && (
         <BaseList
-          paddingY={2}
+          paddingTop={3}
           paddingX={5}
           items={properties}
           itemRenderer={(item, index) => (
-            <View key={index}>
-              <View flexDirection="row" alignItems="center" marginBottom={1}>
+            <View key={index} paddingBottom={4}>
+              <View flexDirection="row" alignItems="center">
                 <Heading
                   semanticElement="h5"
                   visualHeadingLevel="Heading 5"
@@ -67,12 +66,7 @@ const ChildObjectList: FC<Props> = ({ object }) => {
                 </Text>
               </View>
               {item.description && (
-                <MarkdownText
-                  color="subtle"
-                  fontSize={1}
-                  text={item.description || ""}
-                  paddingBottom={3}
-                />
+                <MarkdownText color="subtle" text={item.description || ""} />
               )}
               {item.type === "object" && item.properties && (
                 <ChildObjectList object={item?.properties || {}} />

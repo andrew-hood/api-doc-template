@@ -1,7 +1,7 @@
 import axios from "axios";
 import { get } from "lodash";
 import { OpenAPIV3 } from "openapi-types";
-import { transformObject } from "./utils";
+import { transformObject } from "src/utils/transform";
 
 class HttpClient {
   private domain: string;
